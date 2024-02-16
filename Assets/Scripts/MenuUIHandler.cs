@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class MenuUIHandler : MonoBehaviour
 {
+    public string playerNameEntered;
+
     // Start is called before the first frame update
     void Start()
     {
