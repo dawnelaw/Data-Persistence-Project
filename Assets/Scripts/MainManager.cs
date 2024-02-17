@@ -18,10 +18,9 @@ public class MainManager : MonoBehaviour
     private int m_Points;
     
     private bool m_GameOver = false;
+    public Text playerName;
 
-    public TMP_InputField playerName;
 
-    
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +38,9 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+
+      Debug.Log("In Main Manager, player name is " + MenuUIHandler.playerName);
+        playerName.text = MenuUIHandler.playerName;
     }
 
     private void Update()
