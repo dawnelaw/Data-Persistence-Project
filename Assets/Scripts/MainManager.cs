@@ -22,6 +22,8 @@ public class MainManager : MonoBehaviour
     private bool m_GameOver = false;
     public Text playerName;
 
+    private int intHighScoreLoaded = 0;
+
         private void Awake()
     {
         /* if (Instance != null)
@@ -104,23 +106,31 @@ public class MainManager : MonoBehaviour
 
     public void SaveHighScore()
     {
-        SaveData data = new SaveData();
-        data.savePlayerScore = m_Points;
+        if (intHighScoreLoaded < m_Points)  //only write high score if higher than points in current game
+        {
+            SaveData data = new SaveData();
+            data.savePlayerScore = m_Points;
 
-        string json = JsonUtility.ToJson(data);
+            string json = JsonUtility.ToJson(data);
 
-        File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+            File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+        }
     }
 
     public void LoadHighScore()
     {
+        intHighScoreLoaded = 0;
+
         string path = Application.persistentDataPath + "/savefile.json";
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
 
+            intHighScoreLoaded = data.savePlayerScore;
             highScoreText.text = "Best Score: " + data.savePlayerScore.ToString();
         }
+
+
     }
 }
